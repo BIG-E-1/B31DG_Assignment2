@@ -16,6 +16,10 @@ int task5_sto3 = 0;
 int task5_sto4 = 0;
 int task5_avg = 0;
 
+int error_code = 0;
+
+#define task8_pin 15
+
 void periodicPrint(){
   Serial.println("printing in periodic function");
   tick++;
@@ -48,13 +52,32 @@ void task5(){
   task5_avg = (task5_sto4 + task5_sto3 + task5_sto2 + task5_sto1)/4;                      
 }
 
-//Task6 Volatile 3Hz
+//Task6 Volatile 10Hz
 void task6(){
   for(int C_Loop = 0; C_Loop == 1000; C_Loop++){  
     __asm__ __volatile__("nop");
   }
 }
 
+//Task7 checker 3Hz
+void task7(){
+  if(task5_avg > (1023/2)){
+    error_code = 1; 
+  }
+  else{
+    error_code = 0;
+  }
+}
+
+//Task8 LED 3Hz
+void task8(){
+  if(error_code == 1){
+    digitalWrite(task8_pin, HIGH);
+  }
+  else{
+    digitalWrite(task8_pin, LOW);
+    }
+}
 
 void setup() {
   // put your setup code here, to run once:
