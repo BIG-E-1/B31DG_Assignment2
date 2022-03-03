@@ -1,7 +1,8 @@
 #include <Ticker.h>
 
+#define timer_pin 32
+
 Ticker periodicTicker;
-Ticker onceTicker;
 int tick = 0;
 
 #define task1_pin 21
@@ -28,13 +29,10 @@ int error_code = 0;
 #define task8_pin 15
 
 void periodicPrint(){
-  Serial.println("printing in periodic function");
+  //Serial.println(tick);
   tick++;
 }
 
-void oncePrint(){
-  Serial.println("printing in once function");
-}
 
 //Task1 watchdog 30Hz 
 void task1(){
@@ -56,8 +54,10 @@ void task3(){
 }
 
 //Task4 Poteniotmeter 24Hz
-void task4(){     
-  task4_state = analogRead(task4_pin);                   
+void task4(){
+  digitalWrite(timer_pin, HIGH);     
+  task4_state = analogRead(task4_pin);  
+  digitalWrite(timer_pin, LOW);                  
 }
 
 //Task5 Avg 4 Pot 1Hz
@@ -112,42 +112,50 @@ void task9(){
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  //periodicTicker.attach_ms(0.1, periodicPrint);
+  periodicTicker.attach_ms(2, periodicPrint);
 
   pinMode(task1_pin, OUTPUT);
   pinMode(task2_pin, INPUT);    //Button Digital
   pinMode(task3_pin, INPUT);
   pinMode(task4_pin, INPUT);
   pinMode(task8_pin, OUTPUT);
+  pinMode(timer_pin, OUTPUT);
    
-  
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
 
- // Serial.println(tick);
-
- while(1){
- task2();
- task4();
- //Serial.println(task4_state);
- delay(1000);
-
- task5();
- //Serial.println(task5_avg);
-
- task6();
- task7();
- //Serial.println(error_code);
- task8();
-
-  task3();
-
-  task9();
- }
-
-
+  if((tick % 2500) == 0){
+    task9();
+    tick = 0;
+  }
   
-  
+   if((tick % 500) == 0){
+    task3();
+  }
+
+     if((tick % 16) == 0){
+    task1();
+  }
+
+     if((tick % 100) == 0){
+    task2();
+  }
+
+//rounded 
+  if((tick % 21) == 0){
+    task4();
+    task5();
+  } 
+
+  if((tick % 50) == 0){
+    task6();
+  }
+
+//rounded
+  if((tick % 167) == 0){
+    task7();
+    task8();
+  }
 }
