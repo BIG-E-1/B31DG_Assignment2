@@ -41,10 +41,9 @@ void task2(){
 
 //Task3 Freq In 1Hz
 void task3(){  
-   task3_duration1low = pulseIn(task3_pin, HIGH);
+   task3_duration1low = pulseIn(task3_pin, LOW);
    task3_durationperiod = task3_duration1low *2;
-   task3_frequency = 1 / task3_durationperiod; 
-                        
+   task3_frequency = (1 / (task3_durationperiod/1000))*1000;                   
 }
 
 //Task4 Poteniotmeter 24Hz
@@ -63,7 +62,7 @@ void task5(){
 
 //Task6 Volatile 10Hz
 void task6(){
-  for(int C_Loop = 0; C_Loop == 1000; C_Loop++){  
+  for(int C_Loop = 1; C_Loop == 1000; C_Loop++){  
     __asm__ __volatile__("nop");
   }
 }
@@ -123,6 +122,7 @@ void loop() {
  //Serial.println(error_code);
  task8();
 
+  task3();
   Serial.println(task3_frequency);
  
  }
