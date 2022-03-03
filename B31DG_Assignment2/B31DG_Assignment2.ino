@@ -12,7 +12,7 @@ int task2_state = 0;
 #define task3_pin 13
 float task3_duration1low;
 float task3_durationperiod;
-float task3_frequency;
+int task3_frequency;
 
 #define task4_pin 14    // select the input pin for the potentiometer
 int task4_state = 0; 
@@ -97,7 +97,16 @@ void task8(){
 }
 
 //Task9 Print Resuts
-
+void task9(){
+  Serial.println("");
+  Serial.print("[ ");
+  Serial.print(task2_state);
+  Serial.print(" , ");
+  Serial.print(task3_frequency);
+  Serial.print(" , ");
+  Serial.print(task5_avg);
+  Serial.print(" ]");
+}
 
 
 void setup() {
@@ -120,6 +129,7 @@ void loop() {
  // Serial.println(tick);
 
  while(1){
+ task2();
  task4();
  //Serial.println(task4_state);
  delay(1000);
@@ -133,8 +143,8 @@ void loop() {
  task8();
 
   task3();
-  Serial.println(task3_frequency);
- 
+
+  task9();
  }
 
 
