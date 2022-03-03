@@ -7,7 +7,12 @@ int tick = 0;
 #define task2_pin 22
 int task2_state = 0;
 
-#define task4_pin 23    // select the input pin for the potentiometer
+#define task3_pin 13
+float task3_duration1low;
+float task3_durationperiod;
+float task3_frequency;
+
+#define task4_pin 14    // select the input pin for the potentiometer
 int task4_state = 0; 
 
 int task5_sto1 = 0;
@@ -35,7 +40,11 @@ void task2(){
 }
 
 //Task3 Freq In 1Hz
-void task3(){                        
+void task3(){  
+   task3_duration1low = pulseIn(task3_pin, HIGH);
+   task3_durationperiod = task3_duration1low *2;
+   task3_frequency = 1 / task3_durationperiod; 
+                        
 }
 
 //Task4 Poteniotmeter 24Hz
@@ -61,7 +70,7 @@ void task6(){
 
 //Task7 checker 3Hz
 void task7(){
-  if(task5_avg > (1023/2)){
+  if(task5_avg > (4096/2)){
     error_code = 1; 
   }
   else{
@@ -79,13 +88,19 @@ void task8(){
     }
 }
 
+//Task9 Print Resuts
+
+
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
   //periodicTicker.attach_ms(0.1, periodicPrint);
   
   pinMode(task2_pin, INPUT);    //Button Digital
+  pinMode(task3_pin, INPUT);
   pinMode(task4_pin, INPUT);
+  pinMode(task8_pin, OUTPUT);
    
   
 }
@@ -97,8 +112,19 @@ void loop() {
 
  while(1){
  task4();
- Serial.println(task4_state);
+ //Serial.println(task4_state);
  delay(1000);
+
+ task5();
+ //Serial.println(task5_avg);
+
+ task6();
+ task7();
+ //Serial.println(error_code);
+ task8();
+
+  Serial.println(task3_frequency);
+ 
  }
 
 
