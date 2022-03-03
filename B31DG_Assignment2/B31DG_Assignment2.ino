@@ -4,6 +4,8 @@ Ticker periodicTicker;
 Ticker onceTicker;
 int tick = 0;
 
+#define task1_pin 21
+
 #define task2_pin 22
 int task2_state = 0;
 
@@ -32,6 +34,13 @@ void periodicPrint(){
 
 void oncePrint(){
   Serial.println("printing in once function");
+}
+
+//Task1 watchdog 30Hz 
+void task1(){
+  digitalWrite(task1_pin, HIGH);
+  delayMicroseconds(50);
+  digitalWrite(task1_pin, LOW);
 }
 
 //Task2 High/Low In 5Hz
@@ -95,7 +104,8 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
   //periodicTicker.attach_ms(0.1, periodicPrint);
-  
+
+  pinMode(task1_pin, OUTPUT);
   pinMode(task2_pin, INPUT);    //Button Digital
   pinMode(task3_pin, INPUT);
   pinMode(task4_pin, INPUT);
