@@ -156,7 +156,5 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
-
+  //Loop is unused but kept to allow for compiling.
 }
