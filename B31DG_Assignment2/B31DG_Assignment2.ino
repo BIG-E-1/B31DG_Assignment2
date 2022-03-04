@@ -31,6 +31,38 @@ int error_code = 0;
 void periodicPrint(){
   //Serial.println(tick);
   tick++;
+    if((tick % 2500) == 0){
+    task9();
+    tick = 0;
+  }
+  
+   if((tick % 500) == 0){
+    task3();
+  }
+
+     if((tick % 16) == 0){
+    task1();
+  }
+
+     if((tick % 100) == 0){
+    task2();
+  }
+
+//rounded 
+  if((tick % 21) == 0){
+    task4();
+    task5();
+  } 
+
+  if((tick % 50) == 0){
+    task6();
+  }
+
+//rounded
+  if((tick % 167) == 0){
+    task7();
+    task8();
+  }
 }
 
 
@@ -48,9 +80,9 @@ void task2(){
 
 //Task3 Freq In 1Hz
 void task3(){  
-   task3_duration1low = pulseIn(task3_pin, LOW);
-   task3_durationperiod = task3_duration1low *2;
-   task3_frequency = (1 / (task3_durationperiod/1000))*1000;                   
+ //  task3_duration1low = pulseIn(task3_pin, LOW);
+ //  task3_durationperiod = task3_duration1low *2;
+ //  task3_frequency = (1 / (task3_durationperiod/1000))*1000;                   
 }
 
 //Task4 Poteniotmeter 24Hz
@@ -126,36 +158,5 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
-  if((tick % 2500) == 0){
-    task9();
-    tick = 0;
-  }
-  
-   if((tick % 500) == 0){
-    task3();
-  }
 
-     if((tick % 16) == 0){
-    task1();
-  }
-
-     if((tick % 100) == 0){
-    task2();
-  }
-
-//rounded 
-  if((tick % 21) == 0){
-    task4();
-    task5();
-  } 
-
-  if((tick % 50) == 0){
-    task6();
-  }
-
-//rounded
-  if((tick % 167) == 0){
-    task7();
-    task8();
-  }
 }
