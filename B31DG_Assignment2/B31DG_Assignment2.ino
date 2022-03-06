@@ -8,8 +8,9 @@ int tick_counter = 0;   //counter for ticks.
 
 #define t1_pin 21       //Pin allocation for Task 1
 
-#define t2_pin 34       //Pin allocation for Task 2
+#define t2_pin 22       //Pin allocation for Task 2
 int t2_state = 0;       //Button State for Task 2
+int t2_debounce = 0;
 
 #define t3_pin 13       //Pin allocation for Task 3
 float t3_duration1low;  //float counter for time of low
@@ -77,6 +78,12 @@ void task1(){
 //Task2 High/Low In 5Hz
 void task2(){                        
   t2_state = digitalRead(t2_pin); //Reads state of button
+  delayMicroseconds(1000);       //Delays signal by 50us
+  t2_debounce = digitalRead(t2_pin);
+  delayMicroseconds(1500);
+  if(t2_state != t2_debounce != digitalRead(t2_pin)){
+    t2_state = 0;
+  }  
 }
 
 //Task3 Freq In 1Hz
