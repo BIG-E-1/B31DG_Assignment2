@@ -10,7 +10,7 @@ int tick_counter = 0;   //counter for ticks.
 
 #define t2_pin 22       //Pin allocation for Task 2
 int t2_state = 0;       //Button State for Task 2
-int t2_debounce = 0;
+int t2_debounce = 0;    //Button debounce
 
 #define t3_pin 13       //Pin allocation for Task 3
 float t3_duration1low;  //float counter for time of low
