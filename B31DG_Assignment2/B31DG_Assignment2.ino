@@ -91,9 +91,9 @@ void task2(){
 
 //Task3 Freq In 1Hz
 void task3(){  
- //  t3_duration1low = pulseIn(task3_pin, LOW);
- //  t3_durationperiod = task3_duration1low *2;
- //  t3_frequency = (1 / (task3_durationperiod/1000))*1000;                   
+   t3_duration1low = pulseIn(t3_pin, LOW);
+   t3_durationperiod = t3_duration1low *2;
+   t3_frequency = (1 / (t3_durationperiod/1000))*1000;                   
 }
 
 //Task4 Poteniotmeter 24Hz
