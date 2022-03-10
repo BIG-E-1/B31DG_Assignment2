@@ -1,5 +1,12 @@
+//B31DG Assignment 2
+//Ethan Thomas Hunking H00272332
+//The code below is an example of a cyclic executive. It utilises
+//a ticker (which acts as a clock) to implement 9 different tasks 
+//at different desired frequencies. A counter is linked to the 
+//ticker which will implement the desired task if the statement 
+//is true. The report attached to this code, explains this functionality. 
 
-
+//Begin of declaring inputs, outputs and required int/float
 #include <Ticker.h>     //Includes the ticker header
 Ticker periodicTicker;  //Creates a periodic ticker
 int tick_counter = 0;   //counter for ticks.
@@ -30,44 +37,46 @@ int error_code = 0;     //Task 7 Error Code
 
 #define t8_pin 15       //Pin allocation for Task 8
 
+//End of required declarations.
+//Cyclic Executive Ticker Code
 //Main Function. Utilises Ticker.
 void periodic4ms(){
-    tick_counter++;       
+    tick_counter++;  //Increments Counter     
 
-    //Task 9 Looks for xHz
+    //Task 9 Looks for 0.2Hz
     if((tick_counter % 1250) == 0){
       task9();
-      tick_counter =0;
+      tick_counter =0;  //Resets counter after 5sec
     }
-    //Task 3 Looks for xHz
+    //Task 3 Looks for 1Hz
     else if((tick_counter % 250) == 0){
       task3();
     }
-    //Task 1 Looks for xHz
+    //Task 1 Looks for 31.25Hz
     else if((tick_counter % 8) == 0){
       task1();
     }
-    //Task 2 Looks for xHz
+    //Task 2 Looks for 5Hz
     else if((tick_counter % 50) == 0){
       task2();
     }
-    //Task 4&5 Looks for xHz 
+    //Task 4&5 Looks for 25Hz 
     else if((tick_counter % 10) == 0){
       task4();
       task5();
     } 
-    //Task 6 Looks for xHz
+    //Task 6 Looks for 10Hz
     else if((tick_counter % 25) == 0){
       task6();
     }
-    //Task 7&8 Looks for xHz
+    //Task 7&8 Looks for 3Hz
     else if((tick_counter % 83) == 0){
-       task7();
+      task7();
       task8();
     }
 }     //End of Ticker Function
 
-
+//Functions for each task
 //Task1 watchdog 30Hz 
 void task1(){
   digitalWrite(t1_pin, HIGH);  //Sets Output High
@@ -96,14 +105,14 @@ void task3(){
    t3_frequency = (1 / (t3_durationperiod/1000))*1000;                   
 }
 
-//Task4 Poteniotmeter 24Hz
+//Task4 Poteniotmeter 24Hz (des.) 25Hz (expt.)
 void task4(){
   digitalWrite(timer_pin, HIGH);   //High to measure time   
   t4_state = analogRead(t4_pin);//Reads analog input  
   digitalWrite(timer_pin, LOW);    //Low to end measure time            
 }
 
-//Task5 Avg 4 Pot 1Hz
+//Task5 Avg 4 Pot. 24Hz (des.) 25Hz (expt.)
 void task5(){  
   t5_sto4 = t5_sto3;         //Shifts values by one position
   t5_sto3 = t5_sto2;         //Shifts values by one position         
@@ -155,18 +164,23 @@ void task9(){
   Serial.print(t5_avg); //Prints task 5
 }
 
-
+//End of Functions of tasks
+//Setup code
 void setup() {
   // put your setup code here, to run once:
+
+  //Creates Serial Port
   Serial.begin(115200);
+
+  //Creates 4ms ticker
   periodicTicker.attach_ms(4, periodic4ms);
 
-  pinMode(t1_pin, OUTPUT);
-  pinMode(t2_pin, INPUT);    //Button Digital
-  pinMode(t3_pin, INPUT);
-  pinMode(t4_pin, INPUT);
-  pinMode(t8_pin, OUTPUT);
-  pinMode(timer_pin, OUTPUT);
+  pinMode(t1_pin, OUTPUT);   //Task 1 Watchdog 
+  pinMode(t2_pin, INPUT);    //Task 2 Button dig. read
+  pinMode(t3_pin, INPUT);    //Task 3 Square wave in.
+  pinMode(t4_pin, INPUT);    //Task 4 Analogue input
+  pinMode(t8_pin, OUTPUT);   //Task 8 Error LED output
+  pinMode(timer_pin, OUTPUT);//Output for time testing
    
 }
 
