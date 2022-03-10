@@ -31,37 +31,37 @@ int error_code = 0;     //Task 7 Error Code
 #define t8_pin 15       //Pin allocation for Task 8
 
 //Main Function. Utilises Ticker.
-void periodic2ms(){
+void periodic4ms(){
     tick_counter++;       
 
     //Task 9 Looks for xHz
-    if((tick_counter % 2500) == 0){
+    if((tick_counter % 1250) == 0){
       task9();
       tick_counter =0;
     }
     //Task 3 Looks for xHz
-    else if((tick_counter % 500) == 0){
+    else if((tick_counter % 250) == 0){
       task3();
     }
     //Task 1 Looks for xHz
-    else if((tick_counter % 16) == 0){
+    else if((tick_counter % 8) == 0){
       task1();
     }
     //Task 2 Looks for xHz
-    else if((tick_counter % 100) == 0){
+    else if((tick_counter % 50) == 0){
       task2();
     }
     //Task 4&5 Looks for xHz 
-    else if((tick_counter % 21) == 0){
+    else if((tick_counter % 10) == 0){
       task4();
       task5();
     } 
     //Task 6 Looks for xHz
-    else if((tick_counter % 50) == 0){
+    else if((tick_counter % 25) == 0){
       task6();
     }
     //Task 7&8 Looks for xHz
-    else if((tick_counter % 167) == 0){
+    else if((tick_counter % 83) == 0){
        task7();
       task8();
     }
@@ -148,20 +148,18 @@ void task8(){
 void task9(){
   //Prints in serial a csv as defined in lab sheet
   Serial.println("");
-  Serial.print("[ ");
   Serial.print(t2_state); //Prints task 2
   Serial.print(" , ");
   Serial.print(t3_frequency); //Prints task 3
   Serial.print(" , ");
   Serial.print(t5_avg); //Prints task 5
-  Serial.print(" ]");
 }
 
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  periodicTicker.attach_ms(2, periodic2ms);
+  periodicTicker.attach_ms(4, periodic4ms);
 
   pinMode(t1_pin, OUTPUT);
   pinMode(t2_pin, INPUT);    //Button Digital
